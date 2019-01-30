@@ -1,3 +1,5 @@
+package top_interview;
+
 public class EquationSolver {
 
     /**
