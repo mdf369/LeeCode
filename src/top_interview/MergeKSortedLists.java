@@ -7,22 +7,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class MergeKSortedLists {
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode(int x) { val = x; }
-        @Override
-        public String toString(){
-            StringBuilder builder = new StringBuilder();
-            builder.append(val);
-            ListNode p = next;
-            while (p != null){
-                builder.append("->" + p.val);
-                p = p.next;
-            }
-            return builder.toString();
-        }
-    }
 
     private Queue<Pair<Integer, Integer>> candidate;
 
