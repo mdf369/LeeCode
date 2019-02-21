@@ -11,6 +11,16 @@ public class Tool {
         System.out.println(builder.toString());
     }
 
+    public static void display(int[][] board) {
+        for (int[] line : board) {
+            StringBuilder builder = new StringBuilder();
+            for (int c : line) {
+                builder.append(c).append(",\t");
+            }
+            System.out.println(builder.toString());
+        }
+    }
+
     public static void display(char[][] board) {
         for (char[] line : board) {
             StringBuilder builder = new StringBuilder();
