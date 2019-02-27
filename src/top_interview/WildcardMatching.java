@@ -3,44 +3,47 @@ package top_interview;
 public class WildcardMatching {
 
     public boolean isMatch(String s, String p) {
-        int index1, index2;
-        index1 = index2 = 0;
+        if (s == null || p == null) {
+            return false;
+        }
 
-        while (index1 < s.length() && index2 < p.length()){
-            char c = p.charAt(index2);
+        int indexS, indexP;
+        indexS = indexP = 0;
+        int preS, preP;
+        preS = preP = 0;
+        boolean back = false;
 
-            if (c == '*'){
-                String newP = p.substring(index2 + 1);
-                for (int i = index1;i <= s.length();i++){
-                    if (isMatch(s.substring(i), newP)){
-                        return true;
-                    }
+        while (indexS < s.length()) {
+            if (indexP < p.length() && (p.charAt(indexP) == '?' || p.charAt(indexP) == s.charAt(indexS))) {
+                indexP++;
+                indexS++;
+            } else if (indexP < p.length() && p.charAt(indexP) == '*') {
+                while (indexP < p.length() && p.charAt(indexP) == '*') {
+                    indexP++;
                 }
-                return false;
-            } else if (c == '?'){
+                if (indexP == p.length()) {
+                    return true;
+                }
 
+                back = true;
+                preP = indexP;
+                preS = indexS;
+            } else if (back) {
+                preS++;
+                indexS = preS;
+                indexP = preP;
             } else {
-                if (c != s.charAt(index1)){
-                    return false;
-                }
+                return false;
             }
-
-            index1++;
-            index2++;
         }
 
-        if (index1 == s.length()){
-            if (index2 == p.length()){
-                return true;
-            }
-
-            for (int i = index2;i < p.length();i++){
-                if (p.charAt(i) != '*'){
-                    return false;
-                }
-            }
+        while (indexP < p.length() && p.charAt(indexP) == '*') {
+            indexP++;
+        }
+        if (indexS == s.length() && indexP == p.length()) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 }

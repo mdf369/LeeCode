@@ -2,8 +2,13 @@ package top_interview;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import javafx.util.Pair;
 
 public class WordLadder {
 
@@ -11,80 +16,69 @@ public class WordLadder {
         if (beginWord.equals(endWord)) {
             return 1;
         }
-        if (isValid(beginWord, endWord)) {
-            return 2;
-        }
-
-        int[] mem = new int[wordList.size()];
-
-        int index = wordList.indexOf(endWord);
-        if (index == -1) {
+        if (wordList == null || wordList.size() < 1) {
             return 0;
         }
-        mem[index] = 1;
 
-        int count = 1;
-        while (count > 0) {
-            count = 0;
+        int endIndex = 0;
+        while (endIndex < wordList.size()) {
+            if (endWord.equals(wordList.get(endIndex))) {
+                break;
+            }
+            endIndex++;
+        }
+        if (endIndex == wordList.size()) {
+            return 0;
+        }
+
+        Set<String> candidate = new HashSet<>();
+        for (int i = 0; i < wordList.size(); i++) {
+            if (isValid(beginWord, wordList.get(i))) {
+                candidate.add(wordList.get(i));
+            }
+        }
+
+        Queue<Pair<String, Integer>> queue = new LinkedList<>();
+        int[] used = new int[wordList.size()];
+        queue.add(new Pair<>(endWord, 1));
+        used[endIndex] = 1;
+        while (!queue.isEmpty()) {
+            Pair<String, Integer> pair = queue.poll();
+            String word = pair.getKey();
+
+            if (candidate.contains(word)) {
+                return pair.getValue() + 1;
+            }
+
             for (int i = 0; i < wordList.size(); i++) {
-                if (mem[i]  == 0) {
-                    index = getValidMinIndex(wordList.get(i), wordList, mem);
-                    if (index >= 0) {
-                        mem[i] = mem[index] + 1;
-                        count++;
-                        if (isValid(wordList.get(i), beginWord)) {
-                            return mem[i] + 1;
-                        }
-                    }
+                String newWord = wordList.get(i);
+                if (used[i] == 1) {
+                    continue;
                 }
-            }
-        }
 
-        int min = -1;
-        for (int i = 0; i < wordList.size(); i++) {
-            if (isValid(beginWord, wordList.get(i)) && mem[i] > 0) {
-                if (min >= 0) {
-                    min = Math.min(min, mem[i]);
-                } else {
-                    min = mem[i];
+                if (isValid(word, newWord)) {
+                    queue.add(new Pair<>(newWord, pair.getValue() + 1));
+                    used[i] = 1;
                 }
             }
         }
-        return min + 1;
+        return 0;
     }
 
-    private int getValidMinIndex(String target, List<String> wordList, int[] mem) {
-        List<Integer> candidate = new ArrayList<>();
-        for (int i = 0; i < wordList.size(); i++) {
-            if (isValid(target, wordList.get(i)) && mem[i] > 0) {
-                candidate.add(i);
-            }
-        }
-        if (candidate.isEmpty()) {
-            return -1;
-        } else {
-            int minIndex = 0;
-            for (int i = 0; i < candidate.size(); i++) {
-                if (mem[candidate.get(minIndex)] > mem[candidate.get(i)]) {
-                    minIndex = i;
-                }
-            }
-            return candidate.get(minIndex);
-        }
-    }
-
-    private boolean isValid(String word1, String word2) {
-        if (word1.length() != word2.length()) {
+    private boolean isValid(String s1, String s2) {
+        if (s1.length() != s2.length()) {
             return false;
         }
 
         int count = 0;
-        for (int i = 0; i < word1.length(); i++) {
-            if (word1.charAt(i) != word2.charAt(i)) {
+        for (int i = 0; i < s1.length(); i++) {
+            if (s1.charAt(i) != s2.charAt(i)) {
                 count++;
             }
+            if (count > 1) {
+                return false;
+            }
         }
-
         return count == 1;
     }
 }
