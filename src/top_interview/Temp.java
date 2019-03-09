@@ -7,16 +7,16 @@ import java.util.List;
 public class Temp {
 
   public static void main(String[] args) throws Exception {
-    BestTimeToBuyAndSellStockWithCooldown test = new BestTimeToBuyAndSellStockWithCooldown();
-    String s = "hit";
-    String p = "cog";
-    int[] num1 = {8,6,4,3,3,2,3,5,8,3,8,2,6};
+    SubarraySumEqualsK test = new SubarraySumEqualsK();
+    String s = "abab";
+    String p = "ab";
+    int[] num1 = {1,2,3};
     int[] num2 = {3, 4, 7, 8, 14};
     String[] strs = new String[]{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5",
         "+"};
-    int n = 16;
-    int m = -2147483648;
-    int[][] matrix = new int[][]{{0, 1, 0}, {0, 0, 1}, {1, 1, 1}, {0, 0, 0}};
+    int n = 3;
+    int m = 4;
+    int[][] matrix = new int[][]{{7,0},{4,4},{7,1},{5,0},{6,1},{5,2}};
     char[][] board = new char[][]{
         {'0', '1', '1', '0', '1', '1'},
         {'O', 'O', '0', '0', '0', '0'},
@@ -26,8 +26,8 @@ public class Temp {
         {'O', 'X', 'O', 'O', 'O', 'O'}};
     List<String> wordList = Arrays.asList("hot","dot","dog","lot","log");
 
-    System.out.println(test.maxProfit(num1));
-//      Tool.display(test.intersect(num1, num2));
+    System.out.println(test.subarraySum(num1, n));
+//      Tool.display(test.reconstructQueue(matrix));
 //        Tool.display(num1);
 //        test.wiggleSort(num1);
 //        Tool.display(num1);
