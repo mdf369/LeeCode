@@ -7,6 +7,7 @@ public class ListNode {
         val = x;
         next = null;
     }
+
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();

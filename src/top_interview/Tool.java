@@ -30,4 +30,32 @@ public class Tool {
             System.out.println(builder.toString());
         }
     }
+
+    public static void display(ListNode node) {
+        if (node == null) {
+            return;
+        }
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(node.val);
+
+        node = node.next;
+        while (node != null) {
+            builder.append(" -> ").append(node.val);
+            node = node.next;
+        }
+        System.out.println(builder.toString());
+    }
+
+    public static ListNode buildList(int[] nums) {
+        ListNode root = new ListNode(0);
+        ListNode p = root;
+
+        for (int i = 0; i < nums.length; i++) {
+            ListNode node = new ListNode(nums[i]);
+            p.next = node;
+            p = p.next;
+        }
+        return root.next;
+    }
 }
