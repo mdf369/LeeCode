@@ -31,22 +31,6 @@ public class Tool {
         }
     }
 
-    public static void display(ListNode node) {
-        if (node == null) {
-            return;
-        }
-
-        StringBuilder builder = new StringBuilder();
-        builder.append(node.val);
-
-        node = node.next;
-        while (node != null) {
-            builder.append(" -> ").append(node.val);
-            node = node.next;
-        }
-        System.out.println(builder.toString());
-    }
-
     public static ListNode buildList(int[] nums) {
         ListNode root = new ListNode(0);
         ListNode p = root;
