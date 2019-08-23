@@ -23,6 +23,7 @@ public class StockGod {
       }
       System.out.println(price);
     }
+    scanner.close();
   }
 
   private static int getLoopIndex(int day) {

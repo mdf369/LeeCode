@@ -15,6 +15,7 @@ public class StreetLamp {
     for (int i = 0; i < n; i++) {
       locs[i] = scanner.nextInt();
     }
+    scanner.close();
     Arrays.sort(locs);
 
     int max = 0;

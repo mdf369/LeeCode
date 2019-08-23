@@ -11,6 +11,7 @@ public class FlipArray {
     for (int i = 0; i < n; i++) {
       nums[i] = scanner.nextInt();
     }
+    scanner.close();
 
     if (n <= 1) {
       System.out.println("yes");
