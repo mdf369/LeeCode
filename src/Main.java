@@ -1,74 +1,143 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
+import javafx.util.Pair;
 
 public class Main {
 
-  public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
-    while (scanner.hasNextLine()) {
-      int V = scanner.nextInt();
-      int N = scanner.nextInt();
-
-      int[] prices = new int[N];
-      for (int i = 0; i < N; i++) {
-        prices[i] = scanner.nextInt();
-      }
-
-      int M = scanner.nextInt();
-      int[] priorities = new int[N];
-      Set<Integer> likeSet = new HashSet<>();
-      for (int i = 0; i < M; i++) {
-        int index = scanner.nextInt() - 1;
-        priorities[i] = prices[index];
-        likeSet.add(index);
-      }
-
-      int index = M;
-      for (int i = 0; i < N; i++) {
-        if (likeSet.contains(i)) {
-          continue;
-        }
-
-        priorities[index] = prices[i];
-        index++;
-      }
-
-      int must = 0;
-      int num = 0;
-      for (int i = M - 1; i >= 0; i--) {
-        must += num * priorities[i];
-        num++;
-      }
-
-      System.out.println(go(priorities, M, 0, V - must, Integer.MAX_VALUE));
-    }
-    scanner.close();
+  public static int getDayDiff(Date date1,Date date2) {
+    return (int) ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
   }
 
-  private static int go(int[] priorities, int M, int index, int left, int limit) {
-    if (left == 0) {
+  public static int getHourDiff(Date date1,Date date2) {
+    return (int) ((date2.getTime() - date1.getTime()) / 3600);
+  }
+
+  private static int compare(Date time, Pair<Date, Date> interval) {
+    if (time.compareTo(interval.getKey()) == -1) {
+      return -1;
+    } else if (time.compareTo(interval.getValue()) == 1) {
       return 1;
-    }
-    if (left < 0) {
+    } else {
       return 0;
     }
-    if (index >= priorities.length) {
-      return 0;
+  }
+
+  private static Pair<Integer, Integer> getOverLap(Date time, List<Pair<Date, Date>>[] schedules, int[] mem, int K) {
+    for (int i = 0; i < K; i++) {
+      List<Pair<Date, Date>> intervalList = schedules[i];
+      int startIndex = mem[i];
+
+      while (startIndex < intervalList.size()) {
+        int status = compare(time, intervalList.get(startIndex));
+        if (status == 0) {
+          mem[i] = startIndex + 1;
+          return new Pair<>(i, startIndex);
+        } else if (status == -1) {
+          mem[i] = startIndex;
+          break;
+        } else {
+          startIndex++;
+          mem[i] = startIndex;
+        }
+      }
+    }
+    return null;
+  }
+
+  private static Pair<Integer, Integer> getNextInterval(Date time, List<Pair<Date, Date>>[] schedules, int[] mem, int K) {
+    Date minStart = null;
+    int minRoom = -1;
+    int minIndex = -1;
+
+    for (int i = 0; i < K; i++) {
+      List<Pair<Date, Date>> intervalList = schedules[i];
+      int startIndex = mem[i];
+      if (startIndex == intervalList.size()) {
+        continue;
+      }
+
+      Pair<Date, Date> interval = intervalList.get(startIndex);
+      if (minStart == null) {
+        minStart = interval.getKey();
+        minRoom = i;
+        minIndex = startIndex;
+      } else {
+        if (minStart.compareTo(interval.getKey()) == 1) {
+          minStart = interval.getKey();
+          minRoom = i;
+          minIndex = startIndex;
+        }
+      }
+    }
+    return new Pair<>(minRoom, minIndex);
+  }
+
+  private static Date checkDay(List<Pair<Date, Date>>[] schedules, int K) {
+    int[] mem = new int[K];
+
+    Date time = null;
+    while (true) {
+      Pair<Integer, Integer> pair = getOverLap(time, schedules, mem, K);
+      if (pair == null) {
+        Pair<Integer, Integer> nextIntervalIndex = getNextInterval(time, schedules, mem, K);
+        if (nextIntervalIndex == null) {
+          return null;
+        }
+
+        Pair<Date, Date> nextInterval = schedules[nextIntervalIndex.getKey()].get(nextIntervalIndex.getValue());
+        int hourdiff = getHourDiff(time, nextInterval.getKey());
+        if (hourdiff >= 2) {
+          return time;
+        }
+
+        time = nextInterval.getValue();
+      } else {
+        time = schedules[pair.getKey()].get(pair.getValue()).getValue();
+      }
+    }
+  }
+
+  public static void main(String[] args) throws ParseException {
+    final int LEN = 7;
+    Scanner scanner = new Scanner(System.in);
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat simpleTimeFormat = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ss");
+
+    Date T = simpleDateFormat.parse(scanner.nextLine());
+    int K = Integer.parseInt(scanner.nextLine());
+
+    List<Pair<Date, Date>>[][] schedules = new List[LEN][K];
+    for (int i = 0; i < LEN; i++) {
+      for (int j = 0; j < K; j++) {
+        schedules[i][j] = new ArrayList<>();
+      }
+    }
+    for (int i = 0; i < K; i++) {
+      String[] words = scanner.nextLine().split(",");
+      for (String word : words) {
+        String[] pair = word.split("~");
+        Date start = simpleTimeFormat.parse(pair[0]);
+        Date end = simpleTimeFormat.parse(pair[1]);
+
+        int dayDiff = getDayDiff(T, start);
+        schedules[dayDiff - 1][i].add(new Pair<>(start, end));
+      }
     }
 
-    if (index >= M) {
-      limit = Integer.MAX_VALUE;
-    }
-    int res = go(priorities, M, index + 1, left, 0);
-    int count = 0;
-    int price = priorities[index];
-    while (left > 0 && count < limit) {
-      count++;
-      left -= price;
+    scanner.close();
 
-      res = (res + go(priorities, M, index + 1, left, count)) % 10000007;
-    }
-    return res;
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTime(T);
+    calendar.add(Calendar.DAY_OF_MONTH, 7);
+    Date MAX = calendar.getTime();
   }
 }
