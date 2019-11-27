@@ -6,17 +6,17 @@ import java.util.List;
 public class Temp {
 
   public static void main(String[] args) throws Exception {
-    String s = "10";
-    String p = "aab";
-    String s3 = "AAAAAAAAAAA";
-    int[] num1 = {145};
-    int[] num2 = {-1,1,2};
-    char[] chars = {'A','A','A','B','B','B'};
-    String[] strs = new String[]{"bbaaabaababaaabbabaaaabbbbabbababbabbabbbbabbbbbbbbbab","bbbaaabbbbaababbaabbaaaabbbabbbbbabaababbabbbbbbaaabbabbabaaa","bbbbbaaababaababbabaaabbaabaaabbbabbabaababababbbbbababbbaaababbbbbbbababbbabbbabaaaaaa","bbabbaaaabbabbaaabaabbabaaababbaaabbbaa","aabaaaabaabbbbabbabaaaaabaaababbbbbabababbbaabb","bb","baababbaabaabbabbbbabaabaaababaaababaabbbababaaabaabbbbbabbaababaaaaabbaaaabbbaaaabaaaaabbbbbbaaba","bbbbabaaababbaabab","abbbbbba","abbbababbaabababaababaababababbaaaabababbbaababbaabbabaaaaabbbaaaaababababbaababbbbbbbbbaaabaaabbaaa","bababaaa","ababaaaaaaabbababaaabaabbababbaaabbaabaabbaababbbbabaaababbbbababaabbb","baabbabbbbaababbbaabb","abbabbbbbaababaaabbabbabaababbbbabaaabbabaabaabbbaabaababaababaabaaaaabbaabbbababaabbbbabbababaaba","bbbbabbbaabbbbabbbbbbababbbbaaabbaaabababaaaaabaaabbabaabbbbbbaabbbbbbaaaaaaaabbababbbaa","baaabbaaabbababaabaabbaaaaab","bbbaaaaaaaaaaaaabaaabbbbbaaaaaaababbabbbabaabababbababbaabbaaaabaaaabababab","abaaaaaaaabaabbbbababbbbabababbabaabbaabbaaabbbabbabaababbabbabbbaabbaaaaabbaaaabbb","baabbbbabaaababbaabbabbaabaabbbaabbaaaaaaaabaaaa","aabbbaabbabbbaabbb","aabbaaabaaaabaabaabbaaaabaaabbabaabaabbbbaabbbaaabababbbbaaabaaaaabababababaaaaabbbbaabaaabbb","bbababbabbabbbabbbabbabbbaabababbbbbaabbabbbbaaababbaabbbbabbabbbbabbba","bbabbbbbaaaaaaaabbbaaaabbaababbbaabaabbbbbaabaabbaaabbbabaaaaaaaaababbabbbbbbaaaaabaaa","aaaaaaaabaababbbabbaabbaaabaabbaabbbabbaaaaabbbababaabaabbabaaababbbababbabbbbababa","aaaaabaabababbbabababbbbabaabbbbbbabababbbb","baabaaaaaaaabbabbbaaa","abbaabbaabababbbbabaabbbbbbabaabbbabbbaaaaababababbaababaababa","bbbaaaaaababababbabbbabbbbaabaabaaaaaabbabbbbbbabaabbabababaaaaab","abbbbaababbbabbbbbbaaabaababababbaaaababaaaaaabbaabbabbabbaabaaaaabaaab","baaaaaaaababbaabbabbbbaabbbbbbabaabbabbaaba","bbbbbbaabaaaabbabaaaaabbaaaabbaabaaaababbaababbbbabbbbaab","abbbbbbaaaaaaababaaabbababbabbaabbabaabaaaababbbaa","ababbbaabababaabbaaabbaaaaaabbbbbbbababbaababababbaaabaaaabbabbaaabbaabaaaaba","bbaabbbabbbbbbbbbbbabbabbabbaabbaabaabaabbbabbbbbbabbbbaaabbbaabaabbaaabbbbababbbbb","bba","bbabaabbbbbbaaabbbbbbaabaabaaababaababaababaaaaabbaabbaaabbaabaabbbaaaa","aabbbbababbabaaaababbabbababbbabababbbaaaabbbabbbbabbbbaaa","baabababbbaababbbababbbabababbaabbababbbababbbaba","aabbabbabababbbaaaaabaaaabbaabaab","aabaaaabbababbabbbabbabbbabbababaabaaa"};
-    int n = -1;
+    String s = "2001:0db8:85a3:0:0:8A2E:0370:7334:";
+    String p = "AAACGGTA";
+    String s3 = "abacab";
+    int[] num1 = {3,1,3,3,10,7,10,3,6,9,10,3,7,6,7};
+    int[] num2 = {3};
+    char[] chars = {'a','a','b','b','c','c','c'};
+    String[] strs = new String[]{"cat","cats","catsdogcats","dog","dogcatsdog","hippopotamuses","rat","ratcatdogcat"};
+    int n = 3;
     int m = 5;
-    int z = 4;
-    int[][] matrix = new int[][]{{0,0,1,1},{0,1,1,2},{0,2,1,3},{1,0,2,1},{1,0,2,1},{1,2,2,3},{2,0,3,1},{2,1,3,2},{2,2,3,3}};
+    int z = 60;
+    int[][] matrix = new int[][]{{0,1,0,0},{1,1,1,0},{0,1,0,0},{1,1,0,0}};
     char[][] board = new char[][]{
         {'1', '0', '1', '0', '0'},
         {'1', '0', '1', '1', '1'},
@@ -24,8 +24,9 @@ public class Temp {
         {'1', '0', '0', '1', '0'}};
     List<String> wordList = Arrays.asList("hot","dot","dog","lot","log","cog");
 
-    System.out.println(new ConvertANumberToHexadecimal().toHex(n));
-//      Tool.display(test.maxNumber(num1, num2, n));
+
+    System.out.println(new ConcatenatedWords().findAllConcatenatedWordsInADict(strs));
+//      Tool.display(new FindRightInterval().findRightInterval(matrix));
 //        Tool.display(num1);
 //    ListNode head = Tool.buildList(num1);
 //    test.reorderList(head);

@@ -21,6 +21,16 @@ public class Tool {
         }
     }
 
+    public static void display(boolean[][] board) {
+        for (boolean[] line : board) {
+            StringBuilder builder = new StringBuilder();
+            for (boolean c : line) {
+                builder.append(c).append(",\t");
+            }
+            System.out.println(builder.toString());
+        }
+    }
+
     public static void display(char[][] board) {
         for (char[] line : board) {
             StringBuilder builder = new StringBuilder();
@@ -29,6 +39,15 @@ public class Tool {
             }
             System.out.println(builder.toString());
         }
+    }
+
+    public static void display(ListNode node) {
+        StringBuilder builder = new StringBuilder();
+        while (node != null) {
+            builder.append(node.val).append("->");
+            node = node.next;
+        }
+        System.out.println(builder.toString());
     }
 
     public static ListNode buildList(int[] nums) {

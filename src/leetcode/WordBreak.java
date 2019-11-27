@@ -3,6 +3,7 @@ package leetcode;
 import java.util.*;
 
 public class WordBreak {
+
     public boolean wordBreak(String s, List<String> wordDict) {
         Map<Integer, Set<String>> lenMap = new HashMap<>();
 
@@ -24,9 +25,8 @@ public class WordBreak {
                 lenMap.put(len, set);
             }
         }
-        int[] mem = new int[s.length()];
 
-        return go(s, 0, mem, lenMap);
+        return go(s, 0, new int[s.length()], lenMap);
     }
 
     private boolean go(String s, int index, int[] mem, Map<Integer, Set<String>> lenMap) {
