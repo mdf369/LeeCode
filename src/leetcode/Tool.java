@@ -11,6 +11,15 @@ public class Tool {
         System.out.println(builder.toString());
     }
 
+    public static void display(double[] nums) {
+        StringBuilder builder = new StringBuilder();
+        for (double num : nums) {
+            builder.append(num).append(", ");
+        }
+        builder.delete(builder.length() - 2, builder.length());
+        System.out.println(builder.toString());
+    }
+
     public static void display(int[][] board) {
         for (int[] line : board) {
             StringBuilder builder = new StringBuilder();
